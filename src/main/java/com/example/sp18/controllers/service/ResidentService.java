@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ResidentService {
@@ -47,6 +49,21 @@ public class ResidentService {
         return getResidents().stream()
                 .map(ResidentDTO::getCost).reduce(BigDecimal.ZERO, BigDecimal::add);
 
+    }
+
+    public ResidentDTO getResidentById(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("O id está nulo");
+        }
+
+        Optional<ResidentDTO> residentOpt = getResidents().stream()
+                .filter(resident -> resident.getId() == id).findFirst();
+
+        if (residentOpt.isPresent()) {
+            return residentOpt.get();
+        }
+
+        throw new NoSuchElementException("Morador não encontrado!");
     }
 
 //    public List<ResidentDTO> filteredList(String name) {

@@ -34,16 +34,16 @@ public class ResidentRest {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-//    @GetMapping("/filter")
-//    public List<ResidentDTO> list(@RequestParam("name") String name) {
-//        return residentService.filteredList(name);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResidentDTO getResidentById(@PathVariable Integer id) {
-//        return residentService.getResidentById(id);
-//    }
-//
+    @GetMapping("/filter")
+    public List<ResidentDTO> list(@RequestParam("name") String name) {
+        return residentService.filteredList(name);
+    }
+
+    @GetMapping("/{id}")
+    public ResidentDTO getResidentById(@PathVariable Integer id) {
+        return residentService.getResidentById(id);
+    }
+
     @GetMapping("/cost")
     public BigDecimal getResidentsCost(){
         return residentService.getResidentsCost();
