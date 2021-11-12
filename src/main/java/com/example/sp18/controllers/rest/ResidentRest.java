@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/residents")
@@ -53,6 +52,8 @@ public class ResidentRest {
     public Double getBudget(){
         return residentService.getBudget();
     }
+
+
 
 
 

@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ResidentService {
@@ -64,6 +63,21 @@ public class ResidentService {
         }
 
         throw new NoSuchElementException("Morador não encontrado!");
+    }
+
+    public List<ResidentDTO> filteredList(String name) {
+        if (name == null || name.equals("")) {
+            throw new IllegalArgumentException("O nome está vazio");
+        }
+
+        List<ResidentDTO> residentOpt = getResidents().stream()
+                .filter(resident -> resident.getFirstName().equalsIgnoreCase(name)).collect(Collectors.toList());
+
+        if (!residentOpt.isEmpty()) {
+            return residentOpt;
+        }
+
+        return new ArrayList<>();
     }
 
 //    public List<ResidentDTO> filteredList(String name) {
