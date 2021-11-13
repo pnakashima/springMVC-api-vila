@@ -1,6 +1,7 @@
 package com.example.sp18.controllers.rest;
 
 import com.example.sp18.controllers.service.ResidentService;
+import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,9 +54,9 @@ public class ResidentRest {
         return residentService.getBudget();
     }
 
-
-
-
-
+    @GetMapping("/report")
+    public ReportDTO getReport(){
+        return residentService.getReport();
+    }
 
 }

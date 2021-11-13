@@ -1,8 +1,10 @@
 package com.example.sp18.controllers.service;
 
 import com.example.sp18.model.dao.ResidentDAO;
+import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -79,6 +81,40 @@ public class ResidentService {
 
         return new ArrayList<>();
     }
+
+    public ReportDTO getReport() {
+
+        ReportDTO report = new ReportDTO();
+
+        BigDecimal budget = new BigDecimal(getBudget());
+        report.setBudget(budget);
+
+        BigDecimal diff = budget.subtract(getResidentsCost());
+        report.setDifference(diff);
+
+        report.setTotal(getResidentsCost());
+
+        Optional<ResidentDTO> maxCost = getResidents().stream().max(Comparator.comparing(ResidentDTO::getCost));
+
+//        BigDecimal max = BigDecimal.ZERO;
+//        ResidentDTO mostExpensiveResident;
+//        for (ResidentDTO resident: getResidents()) {
+//            if (resident.getCost().doubleValue() > max.doubleValue()) {
+//                mostExpensiveResident = resident;
+//                max = resident.getCost();
+//            }
+//        }
+
+        report.setMostExpensiveResident(maxCost.get());
+
+        return report;
+    }
+
+//    a diferença entre o Orçamento da Vila com o Gasto total da Vila;
+//    o gasto total da vila;
+//    o orçamento da vila;
+//    o morador com o maior Custo da vila.
+
 
 //    public List<ResidentDTO> filteredList(String name) {
 //        if (name==null) {
