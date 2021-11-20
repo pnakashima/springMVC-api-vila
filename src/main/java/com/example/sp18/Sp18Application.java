@@ -13,9 +13,9 @@ public class Sp18Application {
         SpringApplication.run(Sp18Application.class, args);
     }
 
-    @Bean
-    public MailSender getMailSender() {
-        return new JavaMailSenderImpl();
-    }
+//    @Bean
+//    public MailSender getMailSender() {
+//        return new JavaMailSenderImpl();
+//    }
 
 }

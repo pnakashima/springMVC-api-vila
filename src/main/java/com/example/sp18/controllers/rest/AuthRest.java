@@ -9,6 +9,7 @@ import com.example.sp18.util.JWTUtil;
 import com.google.gson.Gson;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +24,9 @@ public class AuthRest {
 
     private AuthService authService;
 
-    public AuthRest(JWTUtil jwtUtil) {
+    public AuthRest(JWTUtil jwtUtil, AuthService authService) {
         this.jwtUtil = jwtUtil;
+        this.authService = authService;
     }
 
     @PostMapping("/refresh-token")
@@ -37,7 +39,7 @@ public class AuthRest {
     }
 
     @PostMapping("/forgot")
-    public ResponseEntity<Void> forgot(MailDTO mail){
+    public ResponseEntity<Void> forgot(@RequestBody MailDTO mail){
         authService.sendNewPass(mail.getEmail());
         return ResponseEntity.noContent().build();
     }

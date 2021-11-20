@@ -16,7 +16,7 @@ public class ResidentDAO {
     private static BCryptPasswordEncoder pe = new BCryptPasswordEncoder();
 
     public static List<ResidentDTO> residents = new ArrayList(Arrays.asList(
-            new ResidentDTO("Paulo","Nakashima", 45, new BigDecimal("100.0"), 1, "paulo@vila.com", pe.encode("123"), Set.of("ROLE_USER")),
+            new ResidentDTO("Paulo","Nakashima", 45, new BigDecimal("100.0"), 1, "paulo@vila.com", pe.encode("123"), Set.of("ROLE_USER", "ROLE_ADMIN")),
             new ResidentDTO("Joao","Silva", 31, new BigDecimal("200.0"), 2, "joao@vila.com", pe.encode("345")),
             new ResidentDTO("Maria","Souza", 26, new BigDecimal("300.0"), 3, "maria@vila.com", pe.encode("567"))
     ));

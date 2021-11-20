@@ -4,6 +4,7 @@ import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 
+
 public class MailDTO implements Serializable {
 
     private String email;
