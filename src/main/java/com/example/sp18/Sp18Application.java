@@ -2,6 +2,9 @@ package com.example.sp18;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @SpringBootApplication
 public class Sp18Application {
@@ -10,6 +13,9 @@ public class Sp18Application {
         SpringApplication.run(Sp18Application.class, args);
     }
 
-
+    @Bean
+    public MailSender getMailSender() {
+        return new JavaMailSenderImpl();
+    }
 
 }

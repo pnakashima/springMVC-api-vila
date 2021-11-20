@@ -1,9 +1,14 @@
 package com.example.sp18.controllers.service;
 
 import com.example.sp18.model.dao.ResidentDAO;
+import com.example.sp18.model.dao.UserSpringSecurity;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ResidentService {
+public class ResidentService implements UserDetailsService {
 
     private ResidentDAO residentDAO;
     private Double villageBudget;
@@ -110,15 +115,33 @@ public class ResidentService {
         return report;
     }
 
-//    a diferença entre o Orçamento da Vila com o Gasto total da Vila;
-//    o gasto total da vila;
-//    o orçamento da vila;
-//    o morador com o maior Custo da vila.
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        ResidentDTO residentDTO = getResident(username);
+        if (residentDTO==null){
+            throw new UsernameNotFoundException(username);
+        }
+        return new UserSpringSecurity(residentDTO.getEmail(),
+                residentDTO.getPassword(),
+                residentDTO.getRoles());
+    }
 
-//    public List<ResidentDTO> filteredList(String name) {
-//        if (name==null) {
-//            return
-//        }
-//    }
+    public ResidentDTO getResident(String username) {
+        return residentDAO.getResident(username);
+    }
+
+    public static UserSpringSecurity authenticated() {
+        try{
+            return new UserSpringSecurity(
+                    (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
+                    null, new ArrayList<>());
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public void updateUser(ResidentDTO user){
+        residentDAO.updateUser(user);
+    }
 }

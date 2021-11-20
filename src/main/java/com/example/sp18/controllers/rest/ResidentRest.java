@@ -5,6 +5,7 @@ import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -54,6 +55,7 @@ public class ResidentRest {
         return residentService.getBudget();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/report")
     public ReportDTO getReport(){
         return residentService.getReport();
