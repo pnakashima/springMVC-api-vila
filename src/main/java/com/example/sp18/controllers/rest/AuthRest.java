@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/auth")
@@ -39,7 +40,7 @@ public class AuthRest {
     }
 
     @PostMapping("/forgot")
-    public ResponseEntity<Void> forgot(@RequestBody MailDTO mail){
+    public ResponseEntity<Void> forgot(@RequestBody MailDTO mail) throws SQLException {
         authService.sendNewPass(mail.getEmail());
         return ResponseEntity.noContent().build();
     }

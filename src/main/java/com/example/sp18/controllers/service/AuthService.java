@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Random;
 
 @Service
@@ -22,7 +23,7 @@ public class AuthService {
         this.residentService = residentService;
     }
 
-    public void sendNewPass(String email) throws UsernameNotFoundException {
+    public void sendNewPass(String email) throws UsernameNotFoundException, SQLException {
         ResidentDTO user = residentService.getResident(email);
         if (user == null) {
             throw new UsernameNotFoundException("Usuário não encontrado");

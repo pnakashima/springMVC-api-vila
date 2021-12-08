@@ -1,5 +1,6 @@
 package com.example.sp18.controllers.service;
 
+import com.example.sp18.model.dao.ConnectionFactoryJDBC;
 import com.example.sp18.model.dao.ResidentDAO;
 import com.example.sp18.model.dao.UserSpringSecurity;
 import com.example.sp18.model.transport.ReportDTO;
@@ -9,10 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +30,7 @@ public class ResidentService implements UserDetailsService {
         this.villageBudget = villageBudget;
     }
 
-    public List<ResidentDTO> getResidents() {
+    public List<ResidentDTO> getResidents() throws SQLException {
 
         List<ResidentDTO> residents = this.residentDAO.getResidents();
 
@@ -38,10 +41,9 @@ public class ResidentService implements UserDetailsService {
         return residents;
     }
 
-    public Boolean create(ResidentDTO resident) {
+    public Boolean create(ResidentDTO resident) throws SQLException {
         if (resident == null) {
             throw new IllegalArgumentException("O residente está nulo");
-//            System.out.println("O residente está nulo");
         }
         return this.residentDAO.create(resident);
     }
@@ -50,44 +52,52 @@ public class ResidentService implements UserDetailsService {
         return this.villageBudget;
     }
 
-    public BigDecimal getResidentsCost() {
+    public BigDecimal getResidentsCost() throws SQLException {
 
         return getResidents().stream()
                 .map(ResidentDTO::getCost).reduce(BigDecimal.ZERO, BigDecimal::add);
 
     }
 
-    public ResidentDTO getResidentById(Integer id) {
+    public ResidentDTO getResidentById(Integer id) throws SQLException {
         if (id == null) {
             throw new IllegalArgumentException("O id está nulo");
         }
 
-        Optional<ResidentDTO> residentOpt = getResidents().stream()
-                .filter(resident -> resident.getId() == id).findFirst();
+//        Optional<ResidentDTO> residentOpt = getResidents().stream()
+//                .filter(resident -> resident.getId() == id).findFirst();
+//
+//        if (residentOpt.isPresent()) {
+//            return residentOpt.get();
+//        }
 
-        if (residentOpt.isPresent()) {
-            return residentOpt.get();
+        Connection connection = new ConnectionFactoryJDBC().getConnection();
+
+        PreparedStatement pStmt = connection.prepareStatement("select * from residents where id=?");
+        pStmt.setInt(1, id);
+        pStmt.execute();
+
+        ResultSet rs = pStmt.getResultSet();
+
+        if (rs.next()) {
+            return this.residentDAO.getResidentDTO(rs);
         }
+
+        pStmt.close();
+        connection.close();
 
         throw new NoSuchElementException("Morador não encontrado!");
     }
 
-    public List<ResidentDTO> filteredList(String name) {
+    public List<ResidentDTO> filteredList(String name) throws SQLException {
         if (name == null || name.equals("")) {
             throw new IllegalArgumentException("O nome está vazio");
         }
 
-        List<ResidentDTO> residentOpt = getResidents().stream()
-                .filter(resident -> resident.getFirstName().equalsIgnoreCase(name)).collect(Collectors.toList());
-
-        if (!residentOpt.isEmpty()) {
-            return residentOpt;
-        }
-
-        return new ArrayList<>();
+        return residentDAO.filteredList(name);
     }
 
-    public ReportDTO getReport() {
+    public ReportDTO getReport() throws SQLException {
 
         ReportDTO report = new ReportDTO();
 
@@ -118,7 +128,12 @@ public class ResidentService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ResidentDTO residentDTO = getResident(username);
+        ResidentDTO residentDTO = null;
+        try {
+            residentDTO = getResident(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         if (residentDTO==null){
             throw new UsernameNotFoundException(username);
         }
@@ -127,7 +142,7 @@ public class ResidentService implements UserDetailsService {
                 residentDTO.getRoles());
     }
 
-    public ResidentDTO getResident(String username) {
+    public ResidentDTO getResident(String username) throws SQLException {
         return residentDAO.getResident(username);
     }
 
@@ -144,4 +159,6 @@ public class ResidentService implements UserDetailsService {
     public void updateUser(ResidentDTO user){
         residentDAO.updateUser(user);
     }
+
+
 }

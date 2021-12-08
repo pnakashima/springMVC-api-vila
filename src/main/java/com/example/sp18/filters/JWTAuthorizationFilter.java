@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -33,7 +34,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    getAuthentication(header.substring(7));  // substring(7) remove "Bearer ", ficando só o token
+                    null;
+            try {
+                usernamePasswordAuthenticationToken = getAuthentication(header.substring(7)); // substring(7) remove "Bearer ", ficando só o token
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             if (usernamePasswordAuthenticationToken != null) {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
@@ -42,7 +48,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
+    private UsernamePasswordAuthenticationToken getAuthentication(String token) throws SQLException {
         if (jwtUtil.validToken(token)) {
             String email = jwtUtil.getEmailByToken(token);
             UserDetails user = residentService.loadUserByUsername(email);
