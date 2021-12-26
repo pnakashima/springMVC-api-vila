@@ -28,9 +28,9 @@ public class ResidentRest {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> createNewResident(@RequestBody ResidentDTO resident ) throws SQLException {
+    public ResponseEntity<HttpStatus> createNewResident(@RequestBody ResidentDTO resident) throws SQLException {
         Boolean response = this.residentService.create(resident);
-        if (response==false){
+        if (response == false) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -57,7 +57,7 @@ public class ResidentRest {
     }
 
     @GetMapping("/budget")
-    public Double getBudget(){
+    public Double getBudget() {
         return residentService.getBudget();
     }
 
@@ -66,5 +66,15 @@ public class ResidentRest {
     public ReportDTO getReport() throws SQLException {
         return residentService.getReport();
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<HttpStatus> deleteResident(@RequestParam("id") String id) throws SQLException {
+        Boolean response = this.residentService.deleteUser(id);
+        if (response == false) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 }

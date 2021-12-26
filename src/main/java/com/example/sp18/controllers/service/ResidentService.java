@@ -160,5 +160,9 @@ public class ResidentService implements UserDetailsService {
         residentDAO.updateUser(user);
     }
 
+    public Boolean deleteUser(String id) throws SQLException {
+        return residentDAO.deleteUser(id);
+    }
+
 
 }

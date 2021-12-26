@@ -123,5 +123,14 @@ public class ResidentDAO {
         return new ArrayList<>();
     }
 
+    public Boolean deleteUser(String id) throws SQLException {
+        try (Connection connection = new ConnectionFactoryJDBC().getConnection()) {
+            PreparedStatement pStmt = connection.prepareStatement("delete from residents where id = CAST(? AS INTEGER)");
+            pStmt.setString(1, id);
+            pStmt.execute();
+            ResultSet rs = pStmt.getResultSet();
+            return true;
+        }
+    }
 
 }
