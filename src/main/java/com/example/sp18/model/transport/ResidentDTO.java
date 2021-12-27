@@ -9,10 +9,11 @@ public class ResidentDTO {
 
     private String firstName;
     private String lastName;
-    private Integer age;
+    private String email;
+    private String dob;
     private BigDecimal cost;
     private Integer id;
-    private String email;
+    private String cpf;
     private String password;
 
     private Set<String> roles = new HashSet<>();
@@ -20,25 +21,27 @@ public class ResidentDTO {
     public ResidentDTO() {
     }
 
-    public ResidentDTO(String firstName, String lastName, Integer age, BigDecimal cost, Integer id, String email, String password) {
+    public ResidentDTO(String firstName, String lastName, String email, String dob, BigDecimal cost, Integer id, String cpf, String password, Set<String> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.email = email;
+        this.dob = dob;
         this.cost = cost;
         this.id = id;
-        this.email = email;
-        this.password = password;
-    }
-
-    public ResidentDTO(String firstName, String lastName, Integer age, BigDecimal cost, Integer id, String email, String password, Set<String> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.cost = cost;
-        this.id = id;
-        this.email = email;
+        this.cpf = cpf;
         this.password = password;
         this.roles = roles;
+    }
+
+    public ResidentDTO(String firstName, String lastName, String email, String dob, BigDecimal cost, Integer id, String cpf, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dob = dob;
+        this.cost = cost;
+        this.id = id;
+        this.cpf = cpf;
+        this.password = password;
     }
 
     public Set<String> getRoles() {
@@ -65,14 +68,6 @@ public class ResidentDTO {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public BigDecimal getCost() {
         return cost;
     }
@@ -89,20 +84,36 @@ public class ResidentDTO {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

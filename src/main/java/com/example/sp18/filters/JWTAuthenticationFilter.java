@@ -43,6 +43,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     credentials.getEmail(), credentials.getPassword(), new ArrayList<>());
             Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+            System.out.println("Authenticated!");
             return authenticate;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -55,7 +56,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws IOException, ServletException {
 
         String email = ((UserSpringSecurity) authResult.getPrincipal()).getUsername();
+        email="paulo@vila.com";
         JwtDTO generateToken = jwtUtil.generateToken(email);
+        System.out.println("Email (successfulAuthentication): " + email);
 
         response.addHeader("Authorization", generateToken.getFullToken());
         response.getWriter().append(new Gson().toJson(generateToken));

@@ -16,16 +16,14 @@ public class ResidentDAO {
 
     private static BCryptPasswordEncoder pe = new BCryptPasswordEncoder();
 
-    public static List<ResidentDTO> residents = new ArrayList(Arrays.asList(
-            new ResidentDTO("Paulo", "Nakashima", 45, new BigDecimal("100.0"), 1, "paulo@vila.com", pe.encode("123"), Set.of("ROLE_USER", "ROLE_ADMIN")),
-            new ResidentDTO("Joao", "Silva", 31, new BigDecimal("200.0"), 2, "joao@vila.com", pe.encode("345")),
-            new ResidentDTO("Maria", "Souza", 26, new BigDecimal("300.0"), 3, "maria@vila.com", pe.encode("567"))
-    ));
-
-    public void updateUser(ResidentDTO user) {
-        residents.remove(user);
-        residents.add(user);
-    }
+//    public static List<ResidentDTO> residents = new ArrayList(Arrays.asList(
+//            new ResidentDTO("Paulo", "Nakashima", "paulo@vila.com", "19-08-1976", new BigDecimal("100.0"), 1, "21281714828", pe.encode("123"), Set.of("ROLE_USER", "ROLE_ADMIN"))
+//    ));
+//
+//    public void updateUser(ResidentDTO user) {
+//        residents.remove(user);
+//        residents.add(user);
+//    }
 
 //    public List<ResidentDTO> getResidents(){
 //        return residents;
@@ -54,11 +52,12 @@ public class ResidentDAO {
         ResidentDTO resident = new ResidentDTO();
         resident.setFirstName(rs.getString("first_name"));
         resident.setLastName(rs.getString("last_name"));
-        resident.setAge(rs.getInt("age"));
+        resident.setEmail(rs.getString("email"));
+        resident.setDob(rs.getString("dob"));
         resident.setCost(rs.getBigDecimal("cost"));
         resident.setId(rs.getInt("id"));
-        resident.setEmail(rs.getString("email"));
         resident.setPassword(pe.encode(rs.getString("password")));
+        resident.setCpf(rs.getString("cpf"));
         return resident;
     }
 
@@ -67,13 +66,14 @@ public class ResidentDAO {
 //        return residents.add(resident);
 
         try (Connection connection = new ConnectionFactoryJDBC().getConnection()) {
-            PreparedStatement pStmt = connection.prepareStatement("insert into residents values (default, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pStmt = connection.prepareStatement("insert into residents values (default, ?, ?, ?, ?, ?, ?,?);", Statement.RETURN_GENERATED_KEYS);
             pStmt.setString(1, resident.getFirstName());
             pStmt.setString(2, resident.getLastName());
             pStmt.setString(3, resident.getEmail());
-            pStmt.setInt(4, resident.getAge());
+            pStmt.setString(4, resident.getDob());
             pStmt.setBigDecimal(5, resident.getCost());
             pStmt.setString(6, pe.encode(resident.getPassword()));
+            pStmt.setString(7, resident.getCpf());
             pStmt.execute();
 
             ResultSet rs = pStmt.getGeneratedKeys();

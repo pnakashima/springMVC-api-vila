@@ -24,6 +24,7 @@ public class ResidentRest {
 
     @GetMapping("/list")
     public List<ResidentDTO> getResidents() throws SQLException {
+        System.out.println("Listando moradores...");
         return residentService.getResidents();
     }
 
