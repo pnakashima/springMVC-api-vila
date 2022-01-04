@@ -7,6 +7,7 @@ import com.example.sp18.model.transport.IdDTO;
 import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
+import com.example.sp18.util.validateCPF;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,7 +59,12 @@ public class ResidentService implements UserDetailsService {
         if (resident == null) {
             throw new IllegalArgumentException("O residente está nulo");
         }
-        return this.residentDAO.create(resident);
+        if (validateCPF.isCPF(resident.getCpf())) {
+            return this.residentDAO.create(resident);
+        } else {
+            throw new IllegalArgumentException("CPF inválido");
+        }
+
     }
 
     public Double getBudget() {
