@@ -1,6 +1,7 @@
 package com.example.sp18.controllers.rest;
 
 import com.example.sp18.controllers.service.ResidentService;
+import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.http.HttpStatus;
@@ -22,11 +23,20 @@ public class ResidentRest {
         this.residentService = residentService;
     }
 
-    @GetMapping("/list")
+//    rota com os dados completos (ResidentDTO)
+    @GetMapping("/get")
     public List<ResidentDTO> getResidents() throws SQLException {
         System.out.println("Listando moradores...");
         return residentService.getResidents();
     }
+
+//    rota com os dados simplificados (ListDTO)
+    @GetMapping("/list")
+    public List<ListDTO> listResidents() throws SQLException {
+        System.out.println("Listando moradores...");
+        return residentService.listResidents();
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> createNewResident(@RequestBody ResidentDTO resident) throws SQLException {

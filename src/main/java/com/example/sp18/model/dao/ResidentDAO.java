@@ -1,5 +1,6 @@
 package com.example.sp18.model.dao;
 
+import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,25 @@ public class ResidentDAO {
         return residents;
     }
 
+    public List<ListDTO> listResidents() throws SQLException {
+        Connection connection = new ConnectionFactoryJDBC().getConnection();
+        Statement stmt = connection.createStatement();
+        stmt.execute("select * from residents");
+        ResultSet rs = stmt.getResultSet();
+
+        List<ListDTO> residents = new ArrayList<>();
+
+        while (rs.next()) {
+            ListDTO resident = getListDTO(rs);
+            residents.add(resident);
+        }
+
+        stmt.close();
+        connection.close();
+
+        return residents;
+    }
+
     public ResidentDTO getResidentDTO(ResultSet rs) throws SQLException {
         ResidentDTO resident = new ResidentDTO();
         resident.setFirstName(rs.getString("first_name"));
@@ -58,6 +78,14 @@ public class ResidentDAO {
         resident.setId(rs.getInt("id"));
         resident.setPassword(pe.encode(rs.getString("password")));
         resident.setCpf(rs.getString("cpf"));
+        return resident;
+    }
+
+    public ListDTO getListDTO(ResultSet rs) throws SQLException {
+        ListDTO resident = new ListDTO();
+        resident.setFirstName(rs.getString("first_name"));
+        resident.setLastName(rs.getString("last_name"));
+        resident.setId(rs.getInt("id"));
         return resident;
     }
 

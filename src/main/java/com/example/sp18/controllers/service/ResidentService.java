@@ -3,6 +3,7 @@ package com.example.sp18.controllers.service;
 import com.example.sp18.model.dao.ConnectionFactoryJDBC;
 import com.example.sp18.model.dao.ResidentDAO;
 import com.example.sp18.model.dao.UserSpringSecurity;
+import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,17 @@ public class ResidentService implements UserDetailsService {
     public List<ResidentDTO> getResidents() throws SQLException {
 
         List<ResidentDTO> residents = this.residentDAO.getResidents();
+
+        if (residents.isEmpty()) {
+            System.out.println("Não foram encontrados residentes.");
+        }
+
+        return residents;
+    }
+
+    public List<ListDTO> listResidents() throws SQLException {
+
+        List<ListDTO> residents = this.residentDAO.listResidents();
 
         if (residents.isEmpty()) {
             System.out.println("Não foram encontrados residentes.");
