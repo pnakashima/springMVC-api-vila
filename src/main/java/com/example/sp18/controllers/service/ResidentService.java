@@ -3,6 +3,7 @@ package com.example.sp18.controllers.service;
 import com.example.sp18.model.dao.ConnectionFactoryJDBC;
 import com.example.sp18.model.dao.ResidentDAO;
 import com.example.sp18.model.dao.UserSpringSecurity;
+import com.example.sp18.model.transport.IdDTO;
 import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
@@ -71,7 +72,7 @@ public class ResidentService implements UserDetailsService {
 
     }
 
-    public ResidentDTO getResidentById(Integer id) throws SQLException {
+    public IdDTO getResidentById(Integer id) throws SQLException {
         if (id == null) {
             throw new IllegalArgumentException("O id está nulo");
         }
@@ -92,7 +93,7 @@ public class ResidentService implements UserDetailsService {
         ResultSet rs = pStmt.getResultSet();
 
         if (rs.next()) {
-            return this.residentDAO.getResidentDTO(rs);
+            return this.residentDAO.getIdDTO(rs);
         }
 
         pStmt.close();

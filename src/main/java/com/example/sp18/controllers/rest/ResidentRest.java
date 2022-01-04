@@ -1,6 +1,7 @@
 package com.example.sp18.controllers.rest;
 
 import com.example.sp18.controllers.service.ResidentService;
+import com.example.sp18.model.transport.IdDTO;
 import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
@@ -53,7 +54,7 @@ public class ResidentRest {
     }
 
     @GetMapping("/{id}")
-    public ResidentDTO getResidentById(@PathVariable Integer id) throws SQLException {
+    public IdDTO getResidentById(@PathVariable Integer id) throws SQLException {
         return residentService.getResidentById(id);
     }
 

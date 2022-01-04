@@ -1,5 +1,6 @@
 package com.example.sp18.model.dao;
 
+import com.example.sp18.model.transport.IdDTO;
 import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -76,6 +77,18 @@ public class ResidentDAO {
         resident.setDob(rs.getString("dob"));
         resident.setCost(rs.getBigDecimal("cost"));
         resident.setId(rs.getInt("id"));
+        resident.setPassword(pe.encode(rs.getString("password")));
+        resident.setCpf(rs.getString("cpf"));
+        return resident;
+    }
+
+    public IdDTO getIdDTO(ResultSet rs) throws SQLException {
+        IdDTO resident = new IdDTO();
+        resident.setFirstName(rs.getString("first_name"));
+        resident.setLastName(rs.getString("last_name"));
+        resident.setEmail(rs.getString("email"));
+        resident.setDob(rs.getString("dob"));
+        resident.setCost(rs.getBigDecimal("cost"));
         resident.setPassword(pe.encode(rs.getString("password")));
         resident.setCpf(rs.getString("cpf"));
         return resident;
