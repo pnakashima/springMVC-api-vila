@@ -8,6 +8,7 @@ import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import com.example.sp18.util.AgeCalc;
+import com.example.sp18.util.PasswordValidator;
 import com.example.sp18.util.ValidateCPF;
 import com.example.sp18.util.ValidateDOB;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,7 +69,14 @@ public class ResidentService implements UserDetailsService {
         if (ValidateCPF.isCPF(resident.getCpf())) {
             if (ValidateDOB.isDateValid(resident.getDob())) {
                 System.out.println("Age: " + AgeCalc.age(resident.getDob()));
-                return this.residentDAO.create(resident);
+                if (PasswordValidator.isValid(resident.getPassword())) {
+
+                    return this.residentDAO.create(resident);
+
+                } else {
+                    throw new IllegalArgumentException("Senha deve conter no mínimo: 8 caracteres (máximo 30), 1 letra maiúscula, 1 letra minúscula, 1 caractere especial, 1 número");
+                }
+
             } else {
                 throw new IllegalArgumentException("Data de nascimento inválida");
             }

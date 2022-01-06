@@ -56,7 +56,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws IOException, ServletException {
 
         String email = ((UserSpringSecurity) authResult.getPrincipal()).getUsername();
-        email="paulo@vila.com";
         JwtDTO generateToken = jwtUtil.generateToken(email);
         System.out.println("Email (successfulAuthentication): " + email);
 

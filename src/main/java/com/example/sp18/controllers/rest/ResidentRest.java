@@ -29,7 +29,6 @@ public class ResidentRest {
     // Listar todos os habitantes (exibe nome e id apenas)
     @GetMapping("/list")
     public List<ListDTO> listResidents() throws SQLException {
-        System.out.println("Listando moradores...");
         return residentService.listResidents();
     }
 
@@ -52,6 +51,7 @@ public class ResidentRest {
     }
 
     // Cadastro de habitantes
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> createNewResident(@RequestBody ResidentDTO resident) throws SQLException, ParseException {
         Boolean response = this.residentService.create(resident);
@@ -78,7 +78,7 @@ public class ResidentRest {
     }
 
     // Relatório financeiro da vila
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/report")
     public ReportDTO getReport() throws SQLException {
         return residentService.getReport();
@@ -94,7 +94,7 @@ public class ResidentRest {
 
 
 
-//    rota com os dados completos (ResidentDTO)
+
     @GetMapping("/get")
     public List<ResidentDTO> getResidents() throws SQLException {
         System.out.println("Listando moradores...");
