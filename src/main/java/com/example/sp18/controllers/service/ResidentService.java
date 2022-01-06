@@ -8,6 +8,7 @@ import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
 import com.example.sp18.util.validateCPF;
+import com.example.sp18.util.validateDOB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,7 +61,12 @@ public class ResidentService implements UserDetailsService {
             throw new IllegalArgumentException("O residente está nulo");
         }
         if (validateCPF.isCPF(resident.getCpf())) {
-            return this.residentDAO.create(resident);
+            if (validateDOB.isDateValid(resident.getDob())) {
+                return this.residentDAO.create(resident);
+            }
+            else {
+                throw new IllegalArgumentException("Data de nascimento inválida");
+            }
         } else {
             throw new IllegalArgumentException("CPF inválido");
         }

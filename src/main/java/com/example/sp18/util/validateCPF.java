@@ -1,5 +1,7 @@
 package com.example.sp18.util;
 
+import ch.qos.logback.core.util.InvocationGate;
+
 import java.util.InputMismatchException;
 
 public class validateCPF {
@@ -7,7 +9,10 @@ public class validateCPF {
     public static boolean isCPF(String CPF) {
 
         // elimina CPFs com caracteres iguais ou com menos de 11 dígitos
-        if (CPF.equals("00000000000") || CPF.equals("11111111111") || CPF.equals("22222222222") || CPF.equals("33333333333") || CPF.equals("44444444444") || CPF.equals("55555555555") || CPF.equals("66666666666") || CPF.equals("77777777777") || CPF.equals("88888888888") || CPF.equals("99999999999") || (CPF.length() != 11))
+        if (CPF.equals("00000000000") || CPF.equals("11111111111") || CPF.equals("22222222222") ||
+                CPF.equals("33333333333") || CPF.equals("44444444444") || CPF.equals("55555555555") ||
+                CPF.equals("66666666666") || CPF.equals("77777777777") || CPF.equals("88888888888") ||
+                CPF.equals("99999999999") || (CPF.length() != 11))
             return (false);
 
         char dig10, dig11;
@@ -46,6 +51,7 @@ public class validateCPF {
                 dig11 = '0';
             else
                 dig11 = (char) (r + 48);
+
 
             // Verifica se os digitos calculados conferem com os digitos informados.
             if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
