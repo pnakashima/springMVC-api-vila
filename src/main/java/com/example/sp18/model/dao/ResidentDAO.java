@@ -3,11 +3,15 @@ package com.example.sp18.model.dao;
 import com.example.sp18.model.transport.IdDTO;
 import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ResidentDTO;
+import com.example.sp18.util.AgeCalc;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -143,9 +147,9 @@ public class ResidentDAO {
 //        return residents.stream().filter(resident -> resident.getEmail().equals(username)).findFirst().get();
     }
 
-    public List<ResidentDTO> filteredList(String name) throws SQLException {
+    public List<ListDTO> filteredList(String name) throws SQLException {
 
-        List<ResidentDTO> residents = new ArrayList<>();
+        List<ListDTO> residents = new ArrayList<>();
 
         try (Connection connection = new ConnectionFactoryJDBC().getConnection()) {
             PreparedStatement pStmt = connection.prepareStatement("select * from residents where first_name LIKE ?");
@@ -153,7 +157,7 @@ public class ResidentDAO {
             pStmt.execute();
             ResultSet rs = pStmt.getResultSet();
             while (rs.next()) {
-                residents.add(getResidentDTO(rs));
+                residents.add(getListDTO(rs));
             }
         }
 
@@ -174,4 +178,46 @@ public class ResidentDAO {
         }
     }
 
+    public List<ListDTO> filteredMonthList(String month) throws SQLException {
+        List<ListDTO> residents = new ArrayList<>();
+
+        try (Connection connection = new ConnectionFactoryJDBC().getConnection()) {
+            PreparedStatement pStmt = connection.prepareStatement("select * from residents where dob LIKE ?");
+            pStmt.setString(1, "%-" + month + "-%");
+            pStmt.execute();
+            ResultSet rs = pStmt.getResultSet();
+            while (rs.next()) {
+                residents.add(getListDTO(rs));
+            }
+        }
+
+        if (!residents.isEmpty()) {
+            return residents;
+        }
+
+        return new ArrayList<>();
+    }
+
+    public List<ResidentDTO> filteredAgeList(String age) throws SQLException, ParseException {
+
+        List<ResidentDTO> residents = new ArrayList<>();
+
+        try (Connection connection = new ConnectionFactoryJDBC().getConnection()) {
+            PreparedStatement pStmt = connection.prepareStatement("select * from residents");
+            pStmt.execute();
+            ResultSet rs = pStmt.getResultSet();
+            while (rs.next()) {
+                if (AgeCalc.age(getResidentDTO(rs).getDob()) >= Integer.parseInt(age)) {
+                    residents.add(getResidentDTO(rs));
+                }
+            }
+        }
+
+        if (!residents.isEmpty()) {
+            return residents;
+        }
+
+        return new ArrayList<>();
+
+    }
 }

@@ -7,21 +7,20 @@ import com.example.sp18.model.transport.IdDTO;
 import com.example.sp18.model.transport.ListDTO;
 import com.example.sp18.model.transport.ReportDTO;
 import com.example.sp18.model.transport.ResidentDTO;
-import com.example.sp18.util.validateCPF;
-import com.example.sp18.util.validateDOB;
+import com.example.sp18.util.AgeCalc;
+import com.example.sp18.util.ValidateCPF;
+import com.example.sp18.util.ValidateDOB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ResidentService implements UserDetailsService {
@@ -34,17 +33,7 @@ public class ResidentService implements UserDetailsService {
         this.villageBudget = villageBudget;
     }
 
-    public List<ResidentDTO> getResidents() throws SQLException {
-
-        List<ResidentDTO> residents = this.residentDAO.getResidents();
-
-        if (residents.isEmpty()) {
-            System.out.println("Não foram encontrados residentes.");
-        }
-
-        return residents;
-    }
-
+    // Listar todos os habitantes (nome e id)
     public List<ListDTO> listResidents() throws SQLException {
 
         List<ListDTO> residents = this.residentDAO.listResidents();
@@ -56,15 +45,31 @@ public class ResidentService implements UserDetailsService {
         return residents;
     }
 
-    public Boolean create(ResidentDTO resident) throws SQLException {
+
+
+
+    public List<ResidentDTO> getResidents() throws SQLException {
+
+        List<ResidentDTO> residents = this.residentDAO.getResidents();
+
+        if (residents.isEmpty()) {
+            System.out.println("Não foram encontrados residentes.");
+        }
+
+        return residents;
+    }
+
+
+
+    public Boolean create(ResidentDTO resident) throws SQLException, ParseException {
         if (resident == null) {
             throw new IllegalArgumentException("O residente está nulo");
         }
-        if (validateCPF.isCPF(resident.getCpf())) {
-            if (validateDOB.isDateValid(resident.getDob())) {
+        if (ValidateCPF.isCPF(resident.getCpf())) {
+            if (ValidateDOB.isDateValid(resident.getDob())) {
+                System.out.println("Age: " + AgeCalc.age(resident.getDob()));
                 return this.residentDAO.create(resident);
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException("Data de nascimento inválida");
             }
         } else {
@@ -114,7 +119,7 @@ public class ResidentService implements UserDetailsService {
         throw new NoSuchElementException("Morador não encontrado!");
     }
 
-    public List<ResidentDTO> filteredList(String name) throws SQLException {
+    public List<ListDTO> filteredList(String name) throws SQLException {
         if (name == null || name.equals("")) {
             throw new IllegalArgumentException("O nome está vazio");
         }
@@ -159,7 +164,7 @@ public class ResidentService implements UserDetailsService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (residentDTO==null){
+        if (residentDTO == null) {
             throw new UsernameNotFoundException(username);
         }
         return new UserSpringSecurity(residentDTO.getEmail(),
@@ -172,11 +177,11 @@ public class ResidentService implements UserDetailsService {
     }
 
     public static UserSpringSecurity authenticated() {
-        try{
+        try {
             return new UserSpringSecurity(
                     (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
                     null, new ArrayList<>());
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -190,4 +195,19 @@ public class ResidentService implements UserDetailsService {
     }
 
 
+    public List<ListDTO> filteredMonthList(String month) throws SQLException {
+        if (month == null || month.equals("")) {
+            throw new IllegalArgumentException("O mês está vazio");
+        }
+
+        return residentDAO.filteredMonthList(month);
+    }
+
+    public List<ResidentDTO> filteredAgeList(String age) throws SQLException, ParseException {
+        if (age == null || age.equals("")) {
+            throw new IllegalArgumentException("A idade está vazia");
+        }
+
+        return residentDAO.filteredAgeList(age);
+    }
 }

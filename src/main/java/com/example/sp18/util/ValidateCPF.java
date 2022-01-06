@@ -4,7 +4,7 @@ import ch.qos.logback.core.util.InvocationGate;
 
 import java.util.InputMismatchException;
 
-public class validateCPF {
+public class ValidateCPF {
 
     public static boolean isCPF(String CPF) {
 

@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 // classe para validar data de nascimento (dob - date of birth)
 
-public class validateDOB {
+public class ValidateDOB {
 
     final static String DATE_FORMAT = "dd-MM-yyyy";
 
