@@ -1,0 +1,14 @@
+CREATE DATABASE vila;
+
+\c vila
+
+create table residents (id serial primary key, first_name varchar(60) not null, last_name varchar(60) not null, email varchar(60) not null unique, dob varchar(10) not null, cost decimal(8,2) not null, password varchar(60) not null, cpf varchar(60) not null unique);
+
+insert into residents values (default, 'Paulo', 'Nakashima', 'paulo@vila.com', '19-08-1976', 100, '123', '21281714828');
+
+insert into residents values (default, 'Joao', 'Silva', 'joao@vila.com', '23-04-1994', 200, '234', '87218282539');
+
+insert into residents values (default, 'Maria', 'Souza', 'maria@vila.com', '31-05-2000', 300, '345', '58376855450');
+
+insert into residents values (default, 'Fulano', 'Detal', 'fulano@vila.com', '15-09-1985', 400, '456', '34761564431');
+

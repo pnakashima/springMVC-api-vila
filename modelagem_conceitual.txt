@@ -1,0 +1,30 @@
+MODELAGEM CONCEITUAL
+
+Morador (Resident)
+	ID - int
+	nome (first_name) - varchar (60)
+	sobrenome (last_name) - varchar (60)
+	data de nascimento (dob) - varchar (10)
+	renda (cost) - decimal(8,2)
+	cpf - varchar(60) unique
+	email - varchar(60) unique
+	senha (password) - varchar(60)
+
+
+Vila (Village)
+	orçamento (budget) - decimal(15,2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

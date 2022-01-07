@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "224156d3-e199-49a5-8623-ea0751e199f4",
+		"name": "Vila DevInHouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paulo@vila.com\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTMxODI0NH0.p_LQbpVzIDsk3b6Wa0tfxkKwvB-tWNIaJKmM9nHEo3Od9xSHVXGcyNCJ3yI0IDaUOyXgtfwvBY6iuXzkP2fOBw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by name",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/filter?name=Ciclano",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Ciclano"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by month",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/filter-month?month=01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"filter-month"
+					],
+					"query": [
+						{
+							"key": "month",
+							"value": "01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by age",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/filter-age?age=30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"filter-age"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"Ciclano\",\r\n        \"lastName\": \"Detal\",\r\n        \"email\": \"ciclano4@vila.com\",\r\n        \"dob\": \"01-01-1999\",\r\n        \"cost\": 400.0,\r\n        \"cpf\": \"36977272651\",\r\n        \"password\": \"!Ab3teste\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/residents/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"Thay\",\r\n        \"lastName\": \"Hoepers\",\r\n        \"age\": 28,\r\n        \"cost\": 500.0,\r\n        \"id\": 4\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/residents/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTMxODI0NH0.p_LQbpVzIDsk3b6Wa0tfxkKwvB-tWNIaJKmM9nHEo3Od9xSHVXGcyNCJ3yI0IDaUOyXgtfwvBY6iuXzkP2fOBw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/delete?id=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get report",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/report",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot pwd",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2NzA1OH0.9-02g9TNdXCqqpc5-HQxYXduWY_8rYy5K2hizq-c7zJv_DSGrSy2x1Uo5OULhpol1G__PtPHf5F33OzbeAaCgg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTYzNzQxOTc5OH0.3gNnGWAV_JxYe6Fvf6yEpOx4Jwk1bzYssJcIIoNmaor7r6SnsWiPAgRF-XWbYMTH623qwmNzEkGFw1bLtQ3zuw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"paulo@vila.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/forgot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"forgot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTYzNzQxNzQwNX0.0J21jz_eqr84mW1BOIQlBypdRGahjvaxDmxGdMskrOrLx_gD4nzWoz3cBtnHgrJk_8WHqh7OvOiZDfvVyFT36Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/refresh-token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"refresh-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "custo da vila",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "a0ef9fdd-a993-4db4-8774-dd8310bb7fb9",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"Thay\",\r\n        \"lastName\": \"Hoepers\",\r\n        \"age\": 28,\r\n        \"cost\": 500.0,\r\n        \"id\": 4\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/residents/cost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"cost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by username",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXVsb0B2aWxhLmNvbSIsImV4cCI6MTY0MTU2OTAyMX0.qyMDRGYfHmfRxjYuLBr_yWpl0O9GFgbnpWws8L0kr6YrMNHBa7JLtuZECYZBrmpM0mzJkioS35DVnwayJb4_qw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/residents/username?username=paulo@vila.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residents",
+						"username"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "paulo@vila.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
