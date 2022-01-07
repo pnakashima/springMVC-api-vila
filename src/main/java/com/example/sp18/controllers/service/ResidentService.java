@@ -34,7 +34,7 @@ public class ResidentService implements UserDetailsService {
         this.villageBudget = villageBudget;
     }
 
-    // Listar todos os habitantes (nome e id)
+
     public List<ListDTO> listResidents() throws SQLException {
 
         List<ListDTO> residents = this.residentDAO.listResidents();
@@ -194,9 +194,9 @@ public class ResidentService implements UserDetailsService {
         }
     }
 
-//    public void updateUser(ResidentDTO user){
-//        residentDAO.updateUser(user);
-//    }
+    public void updateUser(String email, String password){
+        residentDAO.updateUser(email, password);
+    }
 
     public Boolean deleteUser(String id) throws SQLException {
         return residentDAO.deleteUser(id);

@@ -31,7 +31,7 @@ public class AuthService {
         String newPassword = generatePassword();
         String encodedPass = passwordEncoder.encode(newPassword);
         user.setPassword(encodedPass);
-//        residentService.updateUser(user);
+        residentService.updateUser(email, newPassword);
         emailService.sendNewPassword(user, newPassword);
 
     }

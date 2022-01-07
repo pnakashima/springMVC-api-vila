@@ -178,6 +178,18 @@ public class ResidentDAO {
         }
     }
 
+    public void updateUser(String email, String password) {
+        try (Connection connection = new ConnectionFactoryJDBC().getConnection()) {
+            PreparedStatement pStmt = connection.prepareStatement("update residents set password = ? where email = ?");
+            pStmt.setString(1, email);
+            pStmt.setString(2, password);
+            pStmt.execute();
+            ResultSet rs = pStmt.getResultSet();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<ListDTO> filteredMonthList(String month) throws SQLException {
         List<ListDTO> residents = new ArrayList<>();
 
